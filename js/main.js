@@ -1,36 +1,59 @@
 $(document).ready(function() {
 // document.addEventListener("DOMContentLoaded", function() {
-    params = new URLSearchParams(window.location.search);
-    start = parseInt(params.get("start"));
-    cols = parseInt(params.get("cols"));
-    rows = parseInt(params.get("rows"));
+    var params = new URLSearchParams(window.location.search);
 
-    // $("#test").JsBarcode("300999900000", {
-    //     format: "EAN13"
-    // });
+    function load() {
+        cols = $("#cols").val();
+        rows = $("#rows").val();
+        start = getLastID() - cols * rows + 1;
 
-    // foo = $("svg#template").clone().show();
-    // foo.JsBarcode("300999900000", {
-    //     format: "EAN13"
-    // });
-    // $("#barcodes").append(foo);
+        $("barcodes").empty();
 
-    for (i=0; i<rows; i++) {
-        row = $("<div></div>");
-
-        for (j=0; j<cols; j++) {
-            nextid = start + cols * i + j;
-            nextcode = "3009999"+nextid.toString().padStart(5, 0);
-            barcode = $("svg#template").clone().removeAttr("id").show();
-
-            barcode.JsBarcode(nextcode, {
-                format: "EAN13"
-            });
-
-            row.append(barcode);
+        for (i=0; i<rows; i++) {
+            row = $("<div></div>");
+    
+            for (j=0; j<cols; j++) {
+                nextid = start + cols * i + j;
+                nextcode = "3009999"+nextid.toString().padStart(5, 0);
+                barcode = $("svg#template").clone().removeAttr("id").show();
+    
+                barcode.JsBarcode(nextcode, {
+                    format: "EAN13"
+                });
+    
+                row.append(barcode);
+            }
+    
+            $("#barcodes").append(row);
         }
-
-        $("#barcodes").append(row);
     }
+
+    function getLastID() {
+        // TODO get from file
+        return 39;
+    }
+
+    function incrLastID(n) {
+        // TODO incr value in file
+    }
+
+    if (!params.has("cols")) {
+        $("#cols").val(4);
+    } else {
+        $("#cols").val(parseInt(params.get("cols")));
+    }
+    if (!params.has("rows")) {
+        $("#rows").val(10);
+    } else {
+        $("#rows").val(parseInt(params.get("rows")));
+    }
+
+    $("#gen").on("click", function() {
+        cols = $("#cols").val();
+        rows = $("#rows").val();
+        incrLastID(cols * rows);
+    });
+
+    load();
 });
 
