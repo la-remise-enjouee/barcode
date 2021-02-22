@@ -1,0 +1,17 @@
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-clear::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#barcodes {
+    margin: 40px auto;
+}

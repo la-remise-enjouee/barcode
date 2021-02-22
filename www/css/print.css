@@ -1,0 +1,9 @@
+.noprint {
+    display: none;
+}
+
+#barcodes {
+    width: 21cm;
+    height: 29.7cm;
+}
+
