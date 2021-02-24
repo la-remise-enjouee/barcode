@@ -50,7 +50,7 @@ $(document).ready(function() {
     }
 
     function fetchLastID() {
-        return $.get("http://localhost:5000/barcodes/last", null, 'json')
+        return $.get("/api/barcodes/last", null, 'json')
             .then(function(data) {
                 lastID = data;
             })
@@ -60,7 +60,7 @@ $(document).ready(function() {
     }
 
     function incrLastID(n) {
-        if (typeof n != "int" || n <= 0) {
+        if (n === undefined || n <= 0) {
             alert("error: invalid parameter while increasing last ID");
             return Promise.reject();
         }
@@ -68,7 +68,7 @@ $(document).ready(function() {
         return fetchLastID()
             .then(function() {
                 return $.ajax({
-                    url: "http://localhost:5000/barcodes/last",
+                    url: "/api/barcodes/last",
                     method: 'POST',
                     data: JSON.stringify({ "lastID": lastID+n }), 
                     contentType: 'application/json',
