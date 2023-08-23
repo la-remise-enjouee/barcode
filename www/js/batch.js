@@ -44,14 +44,10 @@ $(document).ready(function() {
         if (params.has("code")) {
             $("#code").val(params.get("code"));
         }
-        if (!params.has("cols")) {
-            $("#cols").val(4);
-        } else {
+        if (params.has("cols")) {
             $("#cols").val(parseInt(params.get("cols")));
         }
-        if (!params.has("rows")) {
-            $("#rows").val(10);
-        } else {
+        if (params.has("rows")) {
             $("#rows").val(parseInt(params.get("rows")));
         }
     }
